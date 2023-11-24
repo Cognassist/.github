@@ -1,4 +1,4 @@
-![Cognassist](assets/header_image.png)
+![Cognassist](/assets/header_image.png)
 
 ## Hello
 
