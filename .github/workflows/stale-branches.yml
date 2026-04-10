@@ -1,0 +1,30 @@
+name: Stale Branch Cleanup
+
+on:
+  schedule:
+    # Runs every Monday at 9:00 AM UTC
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stale-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find and delete stale branches
+        uses: beatlabs/delete-old-branches-action@v0.0.10
+        with:
+          repo_token: ${{ github.token }}
+          date: "90 days ago"
+          dry_run: false
+          delete_tags: false
+          minimum_tags: 0
+          exclude_open_pr_branches: true
+          extra_protected_branch_regex: ^(main|master|develop|release/.*)$
